@@ -1,7 +1,12 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+'use client'
+import '@/styles/all.scss'
 
-const inter = Inter({ subsets: ['latin'] })
+//Layout
+import Login from '@/components/login/Login'
+import Header from '@/components/header/Header'
+
+
+import { useState, useEffect } from 'react';
 
 export const metadata = {
   title: 'Create Next App',
@@ -9,9 +14,32 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+
+  const [opened, setOpened] = useState(true);
+
+  // handle close popup use key ESC
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        setOpened(false)
+      }
+    }
+    window.addEventListener('keydown', close)
+    return () => window.removeEventListener('keydown', close)
+  }, [])
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html>
+
+      <body>
+        <Header opened={opened} setOpened={setOpened} />
+        {
+          opened &&
+          <Login opened={opened} setOpened={setOpened} />
+        }
+
+        {children}
+      </body>
     </html>
   )
 }

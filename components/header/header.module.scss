@@ -1,0 +1,12 @@
+header.root {
+    a {
+        cursor: pointer;
+        display: inline-block;
+        padding: 20px;
+        font-weight: 700;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
